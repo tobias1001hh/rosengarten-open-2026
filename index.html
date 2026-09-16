@@ -315,45 +315,99 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-14T18:30",
+  stand: "2026-09-16T08:30",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
-  phase: "vor-auslosung",
-  news: "Die Auslosung findet am Dienstag, 15.09. um 19:00 Uhr statt — Tableaus und Spielplan erscheinen danach hier.",
+  phase: "ausgelost",
+  news: "Die Spieltermine stehen! Alle Ansetzungen findet ihr unten im Spielplan und in den Tableaus. Zwei Matches (HD-03 Fiske/Fiske – Freyer/Kampe und das Mixed-Viertelfinale Müller-Hey/Müller-Hey – Brüggestrat/Krones-Nendza) werden unter der Woche nach Absprache der Teams gespielt. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
 
   konkurrenzen: [
     {
       id: "HE", name: "Herren Einzel", meldungen: "14",
       modus: "ko", tableauGroesse: 16,
       modusText: "16er-K.O. mit B-Runde — jeder hat mindestens zwei Matches. Finale am Sonntag, 27.09.",
-      teilnehmer: [],   // ab Auslosung: { nr, name, verein, setz }
+      teilnehmer: [
+        { nr: 1, name: "Julian Brüggestrat", verein: "TC Vahrendorf", setz: 1 },
+        { nr: 2, name: "Jan Fiske", verein: "TC Rosengarten", setz: 2 },
+        { nr: 3, name: "Jonathan Engels", verein: "TC Rosengarten", setz: 3 },
+        { nr: 4, name: "Ben Fiske", verein: "TC Rosengarten", setz: 4 },
+        { nr: 5, name: "Tim Engfer", verein: "TC Vahrendorf", setz: null },
+        { nr: 6, name: "Sven Herrmann", verein: "TC Vahrendorf", setz: null },
+        { nr: 7, name: "Marc-Philipp Kittel", verein: "TC Vahrendorf", setz: null },
+        { nr: 8, name: "Sören Krones", verein: "TC Vahrendorf", setz: null },
+        { nr: 9, name: "Paul Müller", verein: "TC Vahrendorf", setz: null },
+        { nr: 10, name: "Uwe Sackmann", verein: "TC Vahrendorf", setz: null },
+        { nr: 11, name: "Daniel Stadach", verein: "TC Vahrendorf", setz: null },
+        { nr: 12, name: "Tobias Tiedgen", verein: "TC Vahrendorf", setz: null },
+        { nr: 13, name: "Kilian Wehske", verein: "TC Emsen", setz: null },
+        { nr: 14, name: "Helge Wenzel", verein: "TC Vahrendorf", setz: null }
+      ],
       sieger: { A: null, B: null }
     },
     {
-      id: "HD", name: "Herren Doppel", meldungen: "14–16 Teams",
+      id: "HD", name: "Herren Doppel", meldungen: "13 Teams",
       modus: "ko", tableauGroesse: 16,
       modusText: "16er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. abends vor der Jubiläumsparty, B-Finale am Sonntag, 27.09.",
-      teilnehmer: [],
+      teilnehmer: [
+        { nr: 1, name: "Achim Vock / Christian Bohn", verein: "TC Vahrendorf", setz: 1 },
+        { nr: 2, name: "Andre Sudhoff / Helge Köhler", verein: "TC Emsen", setz: 2 },
+        { nr: 3, name: "Daniel Stadach / Julian Brüggestrat", verein: "TC Vahrendorf", setz: 3 },
+        { nr: 4, name: "Jan Fiske / Ben Fiske", verein: "TC Rosengarten", setz: 4 },
+        { nr: 5, name: "Jonathan Engels / Sebastian Otte", verein: "TC Rosengarten", setz: null },
+        { nr: 6, name: "René Freyer / Gerson Kampe", verein: "TC Vahrendorf", setz: null },
+        { nr: 7, name: "Till Gutsch / Oliver Hall", verein: "TC Vahrendorf", setz: null },
+        { nr: 8, name: "Olaf Hageböke / Martin Wienke", verein: "TC Emsen", setz: null },
+        { nr: 9, name: "Marc-Philipp Kittel / Tobias Tiedgen", verein: "TC Vahrendorf", setz: null },
+        { nr: 10, name: "Sören Krones / Matthias Mock", verein: "TC Vahrendorf", setz: null },
+        { nr: 11, name: "Enno Ludwig / Daniel Brink", verein: "TC Vahrendorf", setz: null },
+        { nr: 12, name: "Thorsten Michaelis / Jörn Michaelis", verein: "TC Vahrendorf", setz: null },
+        { nr: 13, name: "Helge Wenzel / Tim Engfer", verein: "TC Vahrendorf", setz: null }
+      ],
       sieger: { A: null, B: null }
     },
     {
-      id: "DE", name: "Damen Einzel", meldungen: "3",
+      id: "DE", name: "Damen Einzel", meldungen: "4",
       modus: "gruppe",
-      modusText: "Jede gegen jede — die Tabellenerste ist Turniersiegerin. Das letzte Gruppenspiel steigt am Finaltag, So. 27.09.",
-      teilnehmer: [],
+      modusText: "Jede gegen jede (6 Spiele) — die Tabellenerste ist Turniersiegerin. Das letzte Gruppenspiel steigt am Finaltag, So. 27.09.",
+      teilnehmer: [
+        { nr: 1, name: "Maxi Jaekel", verein: "TC Vahrendorf", setz: null },
+        { nr: 2, name: "Jonna Kampe", verein: "TC Vahrendorf", setz: null },
+        { nr: 3, name: "Elena Krones-Nendza", verein: "TC Vahrendorf", setz: null },
+        { nr: 4, name: "Charlotte Freyer", verein: "TC Vahrendorf", setz: null }
+      ],
       sieger: { A: null }
     },
     {
-      id: "DD", name: "Damen Doppel", meldungen: "7 Teams",
+      id: "DD", name: "Damen Doppel", meldungen: "8 Teams",
       modus: "ko", tableauGroesse: 8,
       modusText: "8er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. abends, B-Finale am Sonntag, 27.09.",
-      teilnehmer: [],
+      teilnehmer: [
+        { nr: 1, name: "Tanja Gerhus-Eddelbüttel / Ann-Karin Mecklenburg", verein: "TC Emsen", setz: 1 },
+        { nr: 2, name: "Elena Krones-Nendza / Annika Thiele-Hanl", verein: "TC Vahrendorf", setz: 2 },
+        { nr: 3, name: "Judith Flägel / Nadine Maschke", verein: "TC Rosengarten", setz: null },
+        { nr: 4, name: "Maxi Jaekel / Simone Freyer", verein: "TC Vahrendorf", setz: null },
+        { nr: 5, name: "Melina Maschke / Jalda Nellis", verein: "TC Vahrendorf", setz: null },
+        { nr: 6, name: "Nisha Ruiz / Martina Hahn", verein: "TC Rosengarten", setz: null },
+        { nr: 7, name: "Rebekka Wehske / Alexandra Lupo", verein: "TC Emsen", setz: null },
+        { nr: 8, name: "Janne Zaage / Christin Fitschen", verein: "TC Vahrendorf", setz: null }
+      ],
       sieger: { A: null, B: null }
     },
     {
-      id: "MX", name: "Mixed Doppel", meldungen: "10–11 Teams",
+      id: "MX", name: "Mixed Doppel", meldungen: "10 Teams",
       modus: "ko", tableauGroesse: 16,
       modusText: "16er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. abends, B-Finale am Sonntag, 27.09.",
-      teilnehmer: [],
+      teilnehmer: [
+        { nr: 1, name: "Achim Vock / Ann-Karin Mecklenburg", verein: "TC Vahrendorf", setz: 1 },
+        { nr: 2, name: "Julian Brüggestrat / Elena Krones-Nendza", verein: "TC Vahrendorf", setz: 2 },
+        { nr: 3, name: "Claudia Verena Krause / Christian Bohn", verein: "TC Vahrendorf", setz: 3 },
+        { nr: 4, name: "Jan Fiske / Nisha Ruiz", verein: "TC Rosengarten", setz: 4 },
+        { nr: 5, name: "Jonathan Engels / Mareike Engels", verein: "TC Rosengarten", setz: null },
+        { nr: 6, name: "Tanja Gerhus-Eddelbüttel / Hinnerk Eddelbüttel", verein: "TC Emsen", setz: null },
+        { nr: 7, name: "Marc-Philipp Kittel / Lieselotte Kittel", verein: "TC Vahrendorf", setz: null },
+        { nr: 8, name: "Oliver Müller-Hey / Ariane Müller-Hey", verein: "TC Kleckerwald", setz: null },
+        { nr: 9, name: "Sebastian Otte / Nadine Maschke", verein: "TC Rosengarten", setz: null },
+        { nr: 10, name: "Annika Thiele-Hanl / Tim Engfer", verein: "TC Vahrendorf", setz: null }
+      ],
       sieger: { A: null, B: null }
     }
   ],
@@ -361,15 +415,88 @@ window.TURNIERDATEN = {
   // Hinweis, der bei den Konkurrenzen mit angezeigt wird (oder null):
   konkurrenzHinweis: "Die Konkurrenzen Damen 65+ und Herren 65+ entfallen mangels ausreichender Meldungen — die Gemeldeten sind herzlich eingeladen, in den offenen Konkurrenzen zu starten.",
 
-  // Matches: gefüllt ab der Auslosung.
-  // { id:"HE-R1-M3", konkurrenz:"HE",
-  //   runde:"R1"|"AF"|"VF"|"HF"|"F"|"B-R1"|"B-VF"|"B-HF"|"B-F"|"GR",
-  //   slot:3,                       Position innerhalb der Runde (Tableau-Reihenfolge)
-  //   a:"Name bzw. Team A", b:"Name bzw. Team B" ("FREILOS" möglich),
-  //   termin:"2026-09-19T10:30"|null, platz:2|null,
-  //   status:"geplant"|"laeuft"|"fertig"|"wo"|"verschoben",
-  //   ergebnis:"6:3 4:6 [10:7]"|null, sieger:"a"|"b"|null }
-  matches: []
+  // Spielnummern (HE-01 … HE-15 usw.) wie im Aushang: R1 = 01–08, VF = 09–12, HF = 13–14, Finale = 15 (DD: 01–04 VF, 05–06 HF, 07 Finale).
+  // Termine laut freigegebenem Spielplan (Stand 16.09.). termin: null = Termin nach Vereinbarung der Teams.
+  matches: [
+    /* ---------- Herren Einzel: Runde 1 (ausgelost 15.09.) ---------- */
+    { id: "HE-R1-M1", konkurrenz: "HE", runde: "R1", slot: 1, a: "Julian Brüggestrat [1]", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
+    { id: "HE-R1-M2", konkurrenz: "HE", runde: "R1", slot: 2, a: "Sören Krones", b: "Uwe Sackmann", termin: "2026-09-18T18:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-R1-M3", konkurrenz: "HE", runde: "R1", slot: 3, a: "Jonathan Engels [3]", b: "Paul Müller", termin: "2026-09-19T13:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-R1-M4", konkurrenz: "HE", runde: "R1", slot: 4, a: "Tim Engfer", b: "Marc-Philipp Kittel", termin: "2026-09-19T12:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-R1-M5", konkurrenz: "HE", runde: "R1", slot: 5, a: "Helge Wenzel", b: "Sven Herrmann", termin: "2026-09-20T09:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-R1-M6", konkurrenz: "HE", runde: "R1", slot: 6, a: "Kilian Wehske", b: "Ben Fiske [4]", termin: "2026-09-18T18:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-R1-M7", konkurrenz: "HE", runde: "R1", slot: 7, a: "Tobias Tiedgen", b: "Daniel Stadach", termin: "2026-09-18T19:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-R1-M8", konkurrenz: "HE", runde: "R1", slot: 8, a: "FREILOS", b: "Jan Fiske [2]", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "b" },
+    /* Herren Einzel: Viertelfinale (HE-09 … HE-12) */
+    { id: "HE-VF-M1", konkurrenz: "HE", runde: "VF", slot: 1, a: "Julian Brüggestrat [1]", b: "Sieger HE-02", termin: "2026-09-19T13:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-VF-M2", konkurrenz: "HE", runde: "VF", slot: 2, a: "Sieger HE-03", b: "Sieger HE-04", termin: "2026-09-20T16:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-VF-M3", konkurrenz: "HE", runde: "VF", slot: 3, a: "Sieger HE-05", b: "Sieger HE-06", termin: "2026-09-20T12:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-VF-M4", konkurrenz: "HE", runde: "VF", slot: 4, a: "Sieger HE-07", b: "Jan Fiske [2]", termin: "2026-09-19T15:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    /* Herren Einzel: Halbfinale (HE-13, HE-14) + Finale (HE-15) + B-Finale */
+    { id: "HE-HF-M1", konkurrenz: "HE", runde: "HF", slot: 1, a: "Sieger HE-09", b: "Sieger HE-10", termin: "2026-09-26T15:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-HF-M2", konkurrenz: "HE", runde: "HF", slot: 2, a: "Sieger HE-11", b: "Sieger HE-12", termin: "2026-09-26T09:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-F-M1", konkurrenz: "HE", runde: "F", slot: 1, a: "Sieger HE-13", b: "Sieger HE-14", termin: "2026-09-27T14:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-B-F-M1", konkurrenz: "HE", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+
+    /* ---------- Herren Doppel: Runde 1 (ausgelost 15.09.) ---------- */
+    { id: "HD-R1-M1", konkurrenz: "HD", runde: "R1", slot: 1, a: "Vock / Bohn [1]", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
+    { id: "HD-R1-M2", konkurrenz: "HD", runde: "R1", slot: 2, a: "Gutsch / Hall", b: "Krones / Mock", termin: "2026-09-20T09:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-R1-M3", konkurrenz: "HD", runde: "R1", slot: 3, a: "Fiske / Fiske [4]", b: "Freyer / Kampe", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-R1-M4", konkurrenz: "HD", runde: "R1", slot: 4, a: "Michaelis / Michaelis", b: "Engels / Otte", termin: "2026-09-19T16:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-R1-M5", konkurrenz: "HD", runde: "R1", slot: 5, a: "Wenzel / Engfer", b: "Hageböke / Wienke", termin: "2026-09-18T18:00", platz: 4, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-R1-M6", konkurrenz: "HD", runde: "R1", slot: 6, a: "FREILOS", b: "Stadach / Brüggestrat [3]", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "b" },
+    { id: "HD-R1-M7", konkurrenz: "HD", runde: "R1", slot: 7, a: "Kittel / Tiedgen", b: "Ludwig / Brink", termin: "2026-09-19T09:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-R1-M8", konkurrenz: "HD", runde: "R1", slot: 8, a: "FREILOS", b: "Sudhoff / Köhler [2]", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "b" },
+    /* Herren Doppel: Viertelfinale (HD-09 … HD-12) */
+    { id: "HD-VF-M1", konkurrenz: "HD", runde: "VF", slot: 1, a: "Vock / Bohn [1]", b: "Sieger HD-02", termin: "2026-09-20T15:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-VF-M2", konkurrenz: "HD", runde: "VF", slot: 2, a: "Sieger HD-03", b: "Sieger HD-04", termin: "2026-09-25T18:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-VF-M3", konkurrenz: "HD", runde: "VF", slot: 3, a: "Sieger HD-05", b: "Stadach / Brüggestrat [3]", termin: "2026-09-19T18:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-VF-M4", konkurrenz: "HD", runde: "VF", slot: 4, a: "Sieger HD-07", b: "Sudhoff / Köhler [2]", termin: "2026-09-20T13:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    /* Herren Doppel: Halbfinale (HD-13, HD-14) + Finale (HD-15) + B-Finale */
+    { id: "HD-HF-M1", konkurrenz: "HD", runde: "HF", slot: 1, a: "Sieger HD-09", b: "Sieger HD-10", termin: "2026-09-26T11:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-HF-M2", konkurrenz: "HD", runde: "HF", slot: 2, a: "Sieger HD-11", b: "Sieger HD-12", termin: "2026-09-26T15:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-F-M1", konkurrenz: "HD", runde: "F", slot: 1, a: "Sieger HD-13", b: "Sieger HD-14", termin: "2026-09-26T18:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-B-F-M1", konkurrenz: "HD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+
+    /* ---------- Damen Einzel: Gruppe (6 Spiele, DE-1 … DE-6) ---------- */
+    { id: "DE-GR-M1", konkurrenz: "DE", runde: "GR", slot: 1, a: "Maxi Jaekel", b: "Jonna Kampe", termin: "2026-09-19T09:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DE-GR-M2", konkurrenz: "DE", runde: "GR", slot: 2, a: "Elena Krones-Nendza", b: "Charlotte Freyer", termin: "2026-09-19T10:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DE-GR-M3", konkurrenz: "DE", runde: "GR", slot: 3, a: "Maxi Jaekel", b: "Elena Krones-Nendza", termin: "2026-09-20T10:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DE-GR-M4", konkurrenz: "DE", runde: "GR", slot: 4, a: "Jonna Kampe", b: "Charlotte Freyer", termin: "2026-09-20T10:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DE-GR-M5", konkurrenz: "DE", runde: "GR", slot: 5, a: "Maxi Jaekel", b: "Charlotte Freyer", termin: "2026-09-20T13:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DE-GR-M6", konkurrenz: "DE", runde: "GR", slot: 6, a: "Jonna Kampe", b: "Elena Krones-Nendza", termin: "2026-09-27T14:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+
+    /* ---------- Damen Doppel: Viertelfinale (DD-01 … DD-04, ausgelost 15.09., kein Freilos) ---------- */
+    { id: "DD-R1-M1", konkurrenz: "DD", runde: "R1", slot: 1, a: "Gerhus-Eddelbüttel / Mecklenburg [1]", b: "Jaekel / Freyer", termin: "2026-09-18T20:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-R1-M2", konkurrenz: "DD", runde: "R1", slot: 2, a: "Zaage / Fitschen", b: "Flägel / Maschke", termin: "2026-09-20T15:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-R1-M3", konkurrenz: "DD", runde: "R1", slot: 3, a: "Wehske / Lupo", b: "Ruiz / Hahn", termin: "2026-09-19T09:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-R1-M4", konkurrenz: "DD", runde: "R1", slot: 4, a: "Maschke / Nellis", b: "Krones-Nendza / Thiele-Hanl [2]", termin: "2026-09-19T13:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    /* Damen Doppel: Halbfinale (DD-05, DD-06) + Finale (DD-07) + B-Finale */
+    { id: "DD-HF-M1", konkurrenz: "DD", runde: "HF", slot: 1, a: "Sieger DD-01", b: "Sieger DD-02", termin: "2026-09-26T09:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-HF-M2", konkurrenz: "DD", runde: "HF", slot: 2, a: "Sieger DD-03", b: "Sieger DD-04", termin: "2026-09-26T09:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-F-M1", konkurrenz: "DD", runde: "F", slot: 1, a: "Sieger DD-05", b: "Sieger DD-06", termin: "2026-09-26T17:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-B-F-M1", konkurrenz: "DD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+
+    /* ---------- Mixed: Runde 1 (ausgelost 15.09., 6 Freilose) ---------- */
+    { id: "MX-R1-M1", konkurrenz: "MX", runde: "R1", slot: 1, a: "Vock / Mecklenburg [1]", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
+    { id: "MX-R1-M2", konkurrenz: "MX", runde: "R1", slot: 2, a: "Kittel / Kittel", b: "Otte / Maschke", termin: "2026-09-20T10:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-R1-M3", konkurrenz: "MX", runde: "R1", slot: 3, a: "Krause / Bohn [3]", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
+    { id: "MX-R1-M4", konkurrenz: "MX", runde: "R1", slot: 4, a: "Gerhus-Eddelbüttel / Eddelbüttel", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
+    { id: "MX-R1-M5", konkurrenz: "MX", runde: "R1", slot: 5, a: "Thiele-Hanl / Engfer", b: "Engels / Engels", termin: "2026-09-20T09:00", platz: 4, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-R1-M6", konkurrenz: "MX", runde: "R1", slot: 6, a: "FREILOS", b: "Fiske / Ruiz [4]", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "b" },
+    { id: "MX-R1-M7", konkurrenz: "MX", runde: "R1", slot: 7, a: "Müller-Hey / Müller-Hey", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
+    { id: "MX-R1-M8", konkurrenz: "MX", runde: "R1", slot: 8, a: "FREILOS", b: "Brüggestrat / Krones-Nendza [2]", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "b" },
+    /* Mixed: Viertelfinale (MX-09 … MX-12) */
+    { id: "MX-VF-M1", konkurrenz: "MX", runde: "VF", slot: 1, a: "Vock / Mecklenburg [1]", b: "Sieger MX-02", termin: "2026-09-25T20:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-VF-M2", konkurrenz: "MX", runde: "VF", slot: 2, a: "Krause / Bohn [3]", b: "Gerhus-Eddelbüttel / Eddelbüttel", termin: "2026-09-19T10:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-VF-M3", konkurrenz: "MX", runde: "VF", slot: 3, a: "Sieger MX-05", b: "Fiske / Ruiz [4]", termin: "2026-09-20T15:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-VF-M4", konkurrenz: "MX", runde: "VF", slot: 4, a: "Müller-Hey / Müller-Hey", b: "Brüggestrat / Krones-Nendza [2]", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
+    /* Mixed: Halbfinale (MX-13, MX-14) + Finale (MX-15) + B-Finale */
+    { id: "MX-HF-M1", konkurrenz: "MX", runde: "HF", slot: 1, a: "Sieger MX-09", b: "Sieger MX-10", termin: "2026-09-26T09:30", platz: 4, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-HF-M2", konkurrenz: "MX", runde: "HF", slot: 2, a: "Sieger MX-11", b: "Sieger MX-12", termin: "2026-09-26T15:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-F-M1", konkurrenz: "MX", runde: "F", slot: 1, a: "Sieger MX-13", b: "Sieger MX-14", termin: "2026-09-26T18:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-B-F-M1", konkurrenz: "MX", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 4, status: "geplant", ergebnis: null, sieger: null }
+  ]
 };
 </script>
 <!-- TURNIERDATEN:END -->
