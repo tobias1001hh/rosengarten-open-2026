@@ -94,6 +94,27 @@
   .punkte { position: absolute; right: 5vw; top: 4.5vh; display: flex; gap: 0.6vw; }
   .punkte i { width: 0.9vw; height: 0.9vw; border-radius: 50%; background: var(--line); }
   .punkte i.aktiv { background: var(--ball); }
+
+  /* Wetter-Slide */
+  .wetter { display: flex; flex-direction: column; gap: 2.2vh; justify-content: center; }
+  .w-haupt { display: flex; align-items: center; gap: 3.5vw; }
+  .w-haupt .icon { font-size: 8.5vw; line-height: 1; }
+  .w-haupt .temp { font-size: 6.4vw; font-weight: 800; line-height: 1; color: #fff; }
+  .w-haupt .tag { font-size: 2vw; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8vh; }
+  .w-haupt .tief { font-size: 1.8vw; color: var(--muted); margin-top: 0.6vh; }
+  .w-kennz { display: flex; gap: 3.2vw; margin-left: auto; }
+  .w-kennz .lab { font-size: 1.4vw; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .w-kennz .wert { font-size: 2.8vw; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .tipp { border-left: 0.45vw solid var(--ball); background: rgba(255,255,255,0.06); padding: 1.5vh 1.6vw; font-size: 2.1vw; font-weight: 600; }
+  .tipp.warn { border-color: #F0A73C; }
+  .tipp.stop { border-color: var(--red); }
+  .w-tage { display: flex; gap: 1.1vw; }
+  .w-tage .t { flex: 1; background: rgba(255,255,255,0.06); padding: 1.2vh 0.6vw; text-align: center; }
+  .w-tage .t.spitze { background: rgba(217,224,33,0.13); }
+  .w-tage .d { font-size: 1.5vw; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .w-tage .i { font-size: 3vw; line-height: 1.3; }
+  .w-tage .g { font-size: 2vw; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .w-tage .r { font-size: 1.5vw; color: var(--muted); font-variant-numeric: tabular-nums; }
 </style>
 
 <div class="layer" id="layerA"></div>
@@ -359,12 +380,117 @@ window.TURNIERDATEN = {
     for (var i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
     return out;
   }
+  /* Lokales Datum (NICHT toISOString — das rechnet in UTC und wuerde abends
+     ab 22:00 MESZ schon den Folgetag als "heute" anzeigen). */
+  function lokalDatum(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  /* ---------- Tennis-Wetter (Open-Meteo, ohne API-Key) -----------------------
+     Wird beim Start geholt und danach alle 10 Minuten geprueft: neu geholt wird
+     nur, wenn die Daten aelter als 3 Stunden sind. Der letzte Abruf liegt im
+     localStorage — nach einem Reload ist also sofort etwas da, und bei
+     Netzausfall bleibt der letzte bekannte Stand stehen. */
+  var WETTER_URL = "https://api.open-meteo.com/v1/forecast?latitude=53.39&longitude=9.93" +
+    "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max," +
+    "precipitation_sum,wind_speed_10m_max,wind_gusts_10m_max,sunset&timezone=Europe%2FBerlin&forecast_days=14";
+  var SPIELTAGE = ["2026-09-18", "2026-09-19", "2026-09-20", "2026-09-25", "2026-09-26", "2026-09-27"];
+  var WETTER_ALTER_MAX = 3 * 60 * 60 * 1000;   /* 3 Stunden */
+  var wetter = null;
+
+  try {
+    var zwischenspeicher = localStorage.getItem("tcv-wetter");
+    if (zwischenspeicher) {
+      var alt = JSON.parse(zwischenspeicher);
+      if (alt && alt.zeit && alt.daily && alt.daily.time) wetter = alt;
+    }
+  } catch (e) { /* localStorage nicht verfuegbar: dann eben ohne */ }
+
+  function wetterHolen() {
+    if (wetter && (Date.now() - wetter.zeit) < WETTER_ALTER_MAX) return;
+    fetch(WETTER_URL, { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j || !j.daily || !j.daily.time) return;
+        wetter = { zeit: Date.now(), daily: j.daily };
+        try { localStorage.setItem("tcv-wetter", JSON.stringify(wetter)); } catch (e) { }
+        slides = buildSlides();   /* Wetter-Slide ab sofort mitrotieren */
+      })
+      .catch(function () { /* offline: letzten bekannten Stand behalten */ });
+  }
+
+  function wetterIcon(code) {
+    if (code === 0) return "☀️";                        /* klar */
+    if (code <= 2) return "🌤️";                   /* leicht bewoelkt */
+    if (code === 3) return "☁️";                        /* bedeckt */
+    if (code <= 48) return "🌫️";                  /* Nebel */
+    if (code <= 57) return "🌦️";                  /* Niesel */
+    if (code <= 67) return "🌧️";                  /* Regen */
+    if (code <= 77) return "❄️";                        /* Schnee */
+    if (code <= 82) return "🌦️";                  /* Schauer */
+    if (code <= 86) return "❄️";
+    return "⛈️";                                        /* Gewitter */
+  }
+  /* Einschaetzung fuer den Sandplatz — Reihenfolge = Dringlichkeit */
+  function tennisTipp(i) {
+    var d = wetter.daily;
+    var code = d.weather_code[i], regen = d.precipitation_probability_max[i],
+        mm = d.precipitation_sum[i], boe = d.wind_gusts_10m_max[i], tmax = d.temperature_2m_max[i];
+    if (code >= 95) return { stufe: "stop", text: "Gewitter möglich — beim ersten Donner runter vom Platz." };
+    if (regen >= 70 || mm >= 5) return { stufe: "stop", text: "Regen sehr wahrscheinlich — Regenpausen einplanen, Plätze rechtzeitig abziehen." };
+    if (regen >= 35 || mm >= 1) return { stufe: "warn", text: "Schauer möglich — Schleppnetze griffbereit, der Sand saugt sich schnell voll." };
+    if (boe >= 40) return { stufe: "warn", text: "Kräftige Böen — hohe Bälle werden zur Lotterie, flach und sicher spielen." };
+    if (tmax < 12) return { stufe: "warn", text: "Kühl — lange Sachen mitbringen und gründlich einspielen." };
+    if (tmax >= 27) return { stufe: "warn", text: "Warm — genug trinken und die Seitenwechsel im Schatten nutzen." };
+    return { stufe: "gut", text: "Bestes Tennis-Wetter — ideale Bedingungen für den Sandplatz." };
+  }
+  function wetterTagLabel(tag, heuteStr) {
+    if (tag === heuteStr) return "Heute";
+    var morgen = new Date(heuteStr + "T12:00"); morgen.setDate(morgen.getDate() + 1);
+    if (tag === lokalDatum(morgen)) return "Morgen";
+    return fmtTagKurz(tag + "T12:00");
+  }
+  function wetterSlide(heuteStr) {
+    if (!wetter || !wetter.daily) return null;
+    var d = wetter.daily;
+    var tage = SPIELTAGE.filter(function (t) { return t >= heuteStr && d.time.indexOf(t) >= 0; });
+    if (!tage.length) return null;
+    var i = d.time.indexOf(tage[0]);
+    var tipp = tennisTipp(i);
+    var flutlicht = d.sunset[i] ? d.sunset[i].slice(11, 16) : null;
+
+    var html = kopf("Tennis-Wetter in Vahrendorf", wetterTagLabel(tage[0], heuteStr) + " auf der Anlage") +
+      "<div class='inhalt wetter'><div class='w-haupt'>" +
+        "<div class='icon'>" + wetterIcon(d.weather_code[i]) + "</div>" +
+        "<div><div class='tag'>" + esc(fmtTagKurz(tage[0] + "T12:00")) + "</div>" +
+          "<div class='temp'>" + Math.round(d.temperature_2m_max[i]) + "°</div>" +
+          "<div class='tief'>nachts " + Math.round(d.temperature_2m_min[i]) + "°</div></div>" +
+        "<div class='w-kennz'>" +
+          "<div><div class='lab'>Regenrisiko</div><div class='wert'>" + Math.round(d.precipitation_probability_max[i]) + "&thinsp;%</div></div>" +
+          "<div><div class='lab'>Böen</div><div class='wert'>" + Math.round(d.wind_gusts_10m_max[i]) + "<span style='font-size:1.4vw'> km/h</span></div></div>" +
+          (flutlicht ? "<div><div class='lab'>Flutlicht ab</div><div class='wert'>" + esc(flutlicht) + "</div></div>" : "") +
+        "</div></div>" +
+      "<div class='tipp " + tipp.stufe + "'>" + tipp.text + "</div>";
+
+    var weitere = tage.slice(1, 6);
+    if (weitere.length) {
+      html += "<div class='w-tage'>" + weitere.map(function (t) {
+        var j = d.time.indexOf(t);
+        return "<div class='t" + (t === "2026-09-26" ? " spitze" : "") + "'>" +
+          "<div class='d'>" + esc(fmtTagKurz(t + "T12:00")) + "</div>" +
+          "<div class='i'>" + wetterIcon(d.weather_code[j]) + "</div>" +
+          "<div class='g'>" + Math.round(d.temperature_2m_max[j]) + "°</div>" +
+          "<div class='r'>" + Math.round(d.precipitation_probability_max[j]) + "&thinsp;% Regen</div></div>";
+      }).join("") + "</div>";
+    }
+    return { html: html + "</div>" };
+  }
 
   /* ---------- Slides bauen (bei jedem Zyklus neu → Tageswechsel klappt) ---------- */
   function buildSlides() {
     var slides = [];
     var jetzt = new Date();
-    var heute = jetzt.toISOString().slice(0, 10);
+    var heute = lokalDatum(jetzt);
     var vorTurnier = D.phase === "vor-auslosung" || D.phase === "ausgelost";
 
     /* Willkommen */
@@ -428,6 +554,9 @@ window.TURNIERDATEN = {
       });
       if (kz.length) slides.push(tabellenSlide("Es wird gespielt", "Konkurrenzen", kz));
     }
+
+    var ws = wetterSlide(heute);
+    if (ws) slides.push(ws);
 
     if (jetzt < new Date("2026-09-27T00:00:00")) {
       slides.push(tabellenSlide("Wir laden alle ein — Samstag, 26.09.2026", "Clubiläum", [
@@ -503,6 +632,11 @@ window.TURNIERDATEN = {
         .catch(function () { /* offline: weiterlaufen */ });
     }, CHECK);
   }
+
+  /* Wetter: beim Start holen, danach alle 10 Minuten pruefen (geholt wird nur,
+     wenn der letzte Abruf aelter als 3 Stunden ist). */
+  wetterHolen();
+  setInterval(wetterHolen, 10 * 60 * 1000);
 
   /* Sicherheitsnetz gegen Langzeit-Drift: einmal pro Nacht um 04:00 neu laden */
   (function planReload() {
