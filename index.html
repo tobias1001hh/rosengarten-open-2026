@@ -315,16 +315,16 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-17T18:00",
+  stand: "2026-09-18T11:00",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
   phase: "ausgelost",
-  news: "Die Spieltermine stehen! Alle Ansetzungen findet ihr unten im Spielplan und in den Tableaus. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
+  news: "Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
 
   konkurrenzen: [
     {
       id: "HE", name: "Herren Einzel", meldungen: "14",
       modus: "ko", tableauGroesse: 16,
-      modusText: "16er-K.O. mit B-Runde — jeder hat mindestens zwei Matches. Finale am Sonntag, 27.09.",
+      modusText: "16er-K.O. mit B-Runde — jeder hat mindestens zwei Matches. Finale am Sonntag, 27.09. um 13:00.",
       teilnehmer: [
         { nr: 1, name: "Julian Brüggestrat", verein: "TC Vahrendorf", setz: 1 },
         { nr: 2, name: "Jan Fiske", verein: "TC Rosengarten", setz: 2 },
@@ -346,7 +346,7 @@ window.TURNIERDATEN = {
     {
       id: "HD", name: "Herren Doppel", meldungen: "13 Teams",
       modus: "ko", tableauGroesse: 16,
-      modusText: "16er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. abends vor der Jubiläumsparty, B-Finale am Sonntag, 27.09.",
+      modusText: "16er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. um 17:00 — danach Doppel-Siegerehrung bei der Jubiläumsparty; B-Finale am Sonntag, 27.09.",
       teilnehmer: [
         { nr: 1, name: "Achim Vock / Christian Bohn", verein: "TC Vahrendorf", setz: 1 },
         { nr: 2, name: "Andre Sudhoff / Helge Köhler", verein: "TC Emsen", setz: 2 },
@@ -367,7 +367,7 @@ window.TURNIERDATEN = {
     {
       id: "DE", name: "Damen Einzel", meldungen: "4",
       modus: "gruppe",
-      modusText: "Jede gegen jede (6 Spiele) — die Tabellenerste ist Turniersiegerin. Das letzte Gruppenspiel steigt am Finaltag, So. 27.09.",
+      modusText: "Jede gegen jede (6 Spiele) — die Tabellenerste ist Turniersiegerin. Das letzte Gruppenspiel eröffnet den Finaltag, So. 27.09. um 11:30.",
       teilnehmer: [
         { nr: 1, name: "Maxi Jaekel", verein: "TC Vahrendorf", setz: null },
         { nr: 2, name: "Jonna Kampe", verein: "TC Vahrendorf", setz: null },
@@ -379,7 +379,7 @@ window.TURNIERDATEN = {
     {
       id: "DD", name: "Damen Doppel", meldungen: "8 Teams",
       modus: "ko", tableauGroesse: 8,
-      modusText: "8er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. abends, B-Finale am Sonntag, 27.09.",
+      modusText: "8er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. um 17:00 — danach Doppel-Siegerehrung bei der Jubiläumsparty; B-Finale am Sonntag, 27.09.",
       teilnehmer: [
         { nr: 1, name: "Tanja Gerhus-Eddelbüttel / Ann-Karin Mecklenburg", verein: "TC Emsen", setz: 1 },
         { nr: 2, name: "Elena Krones-Nendza / Annika Thiele-Hanl", verein: "TC Vahrendorf", setz: 2 },
@@ -395,7 +395,7 @@ window.TURNIERDATEN = {
     {
       id: "MX", name: "Mixed Doppel", meldungen: "10 Teams",
       modus: "ko", tableauGroesse: 16,
-      modusText: "16er-K.O. mit B-Runde. A-Finale am Samstag, 26.09. abends, B-Finale am Sonntag, 27.09.",
+      modusText: "16er-K.O. mit B-Runde. A-Finale NEU am Sonntag, 27.09. um 15:15 (verlegt vom Samstag), B-Finale am Sonntag um 13:00. Danach große Siegerehrung.",
       teilnehmer: [
         { nr: 1, name: "Achim Vock / Ann-Karin Mecklenburg", verein: "TC Vahrendorf", setz: 1 },
         { nr: 2, name: "Julian Brüggestrat / Elena Krones-Nendza", verein: "TC Vahrendorf", setz: 2 },
@@ -435,8 +435,8 @@ window.TURNIERDATEN = {
     /* Herren Einzel: Halbfinale (HE-13, HE-14) + Finale (HE-15) + B-Finale */
     { id: "HE-HF-M1", konkurrenz: "HE", runde: "HF", slot: 1, a: "Sieger HE-09", b: "Sieger HE-10", termin: "2026-09-26T15:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
     { id: "HE-HF-M2", konkurrenz: "HE", runde: "HF", slot: 2, a: "Sieger HE-11", b: "Sieger HE-12", termin: "2026-09-26T09:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HE-F-M1", konkurrenz: "HE", runde: "F", slot: 1, a: "Sieger HE-13", b: "Sieger HE-14", termin: "2026-09-27T14:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HE-B-F-M1", konkurrenz: "HE", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-F-M1", konkurrenz: "HE", runde: "F", slot: 1, a: "Sieger HE-13", b: "Sieger HE-14", termin: "2026-09-27T13:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-B-F-M1", konkurrenz: "HE", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T14:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Herren Doppel: Runde 1 (ausgelost 15.09.) ---------- */
     { id: "HD-R1-M1", konkurrenz: "HD", runde: "R1", slot: 1, a: "Vock / Bohn [1]", b: "FREILOS", termin: null, platz: null, status: "fertig", ergebnis: null, sieger: "a" },
@@ -455,7 +455,7 @@ window.TURNIERDATEN = {
     /* Herren Doppel: Halbfinale (HD-13, HD-14) + Finale (HD-15) + B-Finale */
     { id: "HD-HF-M1", konkurrenz: "HD", runde: "HF", slot: 1, a: "Sieger HD-09", b: "Sieger HD-10", termin: "2026-09-26T11:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "HD-HF-M2", konkurrenz: "HD", runde: "HF", slot: 2, a: "Sieger HD-11", b: "Sieger HD-12", termin: "2026-09-26T15:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HD-F-M1", konkurrenz: "HD", runde: "F", slot: 1, a: "Sieger HD-13", b: "Sieger HD-14", termin: "2026-09-26T18:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-F-M1", konkurrenz: "HD", runde: "F", slot: 1, a: "Sieger HD-13", b: "Sieger HD-14", termin: "2026-09-26T17:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "HD-B-F-M1", konkurrenz: "HD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Damen Einzel: Gruppe (6 Spiele, DE-1 … DE-6) ---------- */
@@ -464,7 +464,7 @@ window.TURNIERDATEN = {
     { id: "DE-GR-M3", konkurrenz: "DE", runde: "GR", slot: 3, a: "Maxi Jaekel", b: "Elena Krones-Nendza", termin: "2026-09-20T10:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "DE-GR-M4", konkurrenz: "DE", runde: "GR", slot: 4, a: "Jonna Kampe", b: "Charlotte Freyer", termin: "2026-09-20T10:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
     { id: "DE-GR-M5", konkurrenz: "DE", runde: "GR", slot: 5, a: "Maxi Jaekel", b: "Charlotte Freyer", termin: "2026-09-24T20:30", platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "DE-GR-M6", konkurrenz: "DE", runde: "GR", slot: 6, a: "Jonna Kampe", b: "Elena Krones-Nendza", termin: "2026-09-27T14:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DE-GR-M6", konkurrenz: "DE", runde: "GR", slot: 6, a: "Jonna Kampe", b: "Elena Krones-Nendza", termin: "2026-09-27T11:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Damen Doppel: Viertelfinale (DD-01 … DD-04, ausgelost 15.09., kein Freilos) ---------- */
     { id: "DD-R1-M1", konkurrenz: "DD", runde: "R1", slot: 1, a: "Gerhus-Eddelbüttel / Mecklenburg [1]", b: "Jaekel / Freyer", termin: "2026-09-18T20:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
@@ -474,7 +474,7 @@ window.TURNIERDATEN = {
     /* Damen Doppel: Halbfinale (DD-05, DD-06) + Finale (DD-07) + B-Finale */
     { id: "DD-HF-M1", konkurrenz: "DD", runde: "HF", slot: 1, a: "Sieger DD-01", b: "Sieger DD-02", termin: "2026-09-26T09:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
     { id: "DD-HF-M2", konkurrenz: "DD", runde: "HF", slot: 2, a: "Sieger DD-03", b: "Sieger DD-04", termin: "2026-09-26T09:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
-    { id: "DD-F-M1", konkurrenz: "DD", runde: "F", slot: 1, a: "Sieger DD-05", b: "Sieger DD-06", termin: "2026-09-26T17:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-F-M1", konkurrenz: "DD", runde: "F", slot: 1, a: "Sieger DD-05", b: "Sieger DD-06", termin: "2026-09-26T17:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
     { id: "DD-B-F-M1", konkurrenz: "DD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Mixed: Runde 1 (ausgelost 15.09., 6 Freilose) ---------- */
@@ -494,7 +494,7 @@ window.TURNIERDATEN = {
     /* Mixed: Halbfinale (MX-13, MX-14) + Finale (MX-15) + B-Finale */
     { id: "MX-HF-M1", konkurrenz: "MX", runde: "HF", slot: 1, a: "Sieger MX-09", b: "Sieger MX-10", termin: "2026-09-26T09:30", platz: 4, status: "geplant", ergebnis: null, sieger: null },
     { id: "MX-HF-M2", konkurrenz: "MX", runde: "HF", slot: 2, a: "Sieger MX-11", b: "Sieger MX-12", termin: "2026-09-26T15:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
-    { id: "MX-F-M1", konkurrenz: "MX", runde: "F", slot: 1, a: "Sieger MX-13", b: "Sieger MX-14", termin: "2026-09-26T18:30", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-F-M1", konkurrenz: "MX", runde: "F", slot: 1, a: "Sieger MX-13", b: "Sieger MX-14", termin: "2026-09-27T15:15", platz: 3, status: "geplant", ergebnis: null, sieger: null },
     { id: "MX-B-F-M1", konkurrenz: "MX", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 4, status: "geplant", ergebnis: null, sieger: null }
   ]
 };
