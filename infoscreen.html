@@ -138,7 +138,7 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-18T11:00",
+  stand: "2026-09-18T10:40",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
   phase: "ausgelost",
   news: "Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
@@ -540,14 +540,19 @@ window.TURNIERDATEN = {
       else slides.push({ html: kopf("15. September 2026", "Die Auslosung ist erfolgt") + "<div class='inhalt welcome'><div class='datum'>Tableaus und Spielplan: auf der Turnierseite und am Aushang.</div></div>" });
     }
 
-    if (vorTurnier) {
+    /* Programm — auch waehrend der Turnierwoche zeigen: das Finalwochenende mit
+       der geteilten Siegerehrung ist genau die Info, nach der gefragt wird. */
+    if (D.phase !== "beendet") {
       slides.push(tabellenSlide("Turnierwoche", "Programm", [
-        "<tr><td class='zeit'>Fr. 18.09.</td><td>ab 18:00</td><td class='paarung'>Vorrunden (bei Bedarf)</td><td></td></tr>",
+        "<tr><td class='zeit'>Fr. 18.09.</td><td>ab 18:00</td><td class='paarung'>Vorrunden</td><td></td></tr>",
         "<tr><td class='zeit'>Sa./So. 19./20.09.</td><td>ab 09:00</td><td class='paarung'>Vorrunden</td><td></td></tr>",
         "<tr><td class='zeit'>Fr. 25.09.</td><td>ab 18:00</td><td class='paarung'>Vorrunden / Halbfinals</td><td></td></tr>",
-        "<tr><td class='zeit'>Sa. 26.09.</td><td>ab 09:00</td><td class='paarung'>Halbfinals · Finals Doppel &amp; Mixed · Jubiläumsparty</td><td></td></tr>",
-        "<tr><td class='zeit'>So. 27.09.</td><td>ab 13:00</td><td class='paarung'>Finals Einzel &amp; B-Runden</td><td></td></tr>"
+        "<tr><td class='zeit'>Sa. 26.09.</td><td>ab 09:00</td><td class='paarung'>Halbfinals · <b>17:00 Finals Herren- &amp; Damen-Doppel</b> · Clubiläum &amp; Party, ca. 18:30 Doppel-Siegerehrung</td><td></td></tr>",
+        "<tr><td class='zeit'>So. 27.09.</td><td>ab 11:30</td><td class='paarung'><b>13:00 Finale Herren Einzel</b> · <b>15:15 Finale Mixed</b> · B-Finals · ca. 16:45 große Siegerehrung</td><td></td></tr>"
       ]));
+    }
+
+    if (vorTurnier) {
       var kz = D.konkurrenzen.map(function (k) {
         return "<tr><td class='paarung'>" + esc(k.name) + "</td><td>" + esc(k.meldungen) +
           (String(k.meldungen).indexOf("Team") < 0 ? " Meldungen" : "") + "</td></tr>";
@@ -561,8 +566,10 @@ window.TURNIERDATEN = {
     if (jetzt < new Date("2026-09-27T00:00:00")) {
       slides.push(tabellenSlide("Wir laden alle ein — Samstag, 26.09.2026", "Clubiläum", [
         "<tr><td class='zeit'>15:00</td><td class='paarung'>Start des Jubiläumsfests mit offizieller Eröffnung, Spiel- &amp; Mitmach-Stationen, Ausstellung der Vereinschronik</td></tr>",
-        "<tr><td class='zeit'>17:30</td><td class='paarung'>Siegerehrungen &amp; Ehrungen der Jubilarinnen und Jubilare, gemeinsames Jubiläumsfoto</td></tr>",
+        "<tr><td class='zeit'>17:00</td><td class='paarung'><b>Finals Herren- &amp; Damen-Doppel</b> (parallel auf Platz 1 und 3)</td></tr>",
+        "<tr><td class='zeit'>17:30</td><td class='paarung'>Ehrungen der Jubilarinnen und Jubilare, gemeinsames Jubiläumsfoto</td></tr>",
         "<tr><td class='zeit'>18:00</td><td class='paarung'>Jubiläumsabend mit Flutlicht-Match, Tombola, Freibier u.&nbsp;v.&nbsp;m.</td></tr>",
+        "<tr><td class='zeit'>ca. 18:30</td><td class='paarung'><b>Siegerehrung Herren- &amp; Damen-Doppel</b> (Einzel und Mixed: So. ca. 16:45)</td></tr>",
         "<tr><td class='zeit'>21:00</td><td class='paarung'>Party im Clubhaus — open end!</td></tr>"
       ]));
     }
