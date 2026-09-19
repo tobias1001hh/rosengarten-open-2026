@@ -317,7 +317,7 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-19T18:31",
+  stand: "2026-09-19T18:36",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
   phase: "turnier",
   news: "Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
@@ -438,6 +438,10 @@ window.TURNIERDATEN = {
     { id: "HE-HF-M1", konkurrenz: "HE", runde: "HF", slot: 1, a: "Julian Brüggestrat [1]", b: "Sieger HE-10", termin: "2026-09-26T15:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
     { id: "HE-HF-M2", konkurrenz: "HE", runde: "HF", slot: 2, a: "Sieger HE-11", b: "Jan Fiske [2]", termin: "2026-09-26T09:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "HE-F-M1", konkurrenz: "HE", runde: "F", slot: 1, a: "Sieger HE-13", b: "Sieger HE-14", termin: "2026-09-27T13:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    /* Herren Einzel B-Runde (ausgelost 19.09.): nur 4 Teilnehmer — Herrmann und Stadach krank ausgeschieden,
+       beide Freilos-Gesetzten haben ihr VF gewonnen. Daher keine B-Runde 1, direkt zwei B-Halbfinals. */
+    { id: "HE-B-HF-M1", konkurrenz: "HE", runde: "B-HF", slot: 1, a: "Paul Müller", b: "Marc-Philipp Kittel", termin: "2026-09-20T16:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-B-HF-M2", konkurrenz: "HE", runde: "B-HF", slot: 2, a: "Uwe Sackmann", b: "Ben Fiske", termin: "2026-09-20T10:30", platz: 4, status: "geplant", ergebnis: null, sieger: null },
     { id: "HE-B-F-M1", konkurrenz: "HE", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T14:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Herren Doppel: Runde 1 (ausgelost 15.09.) ---------- */
@@ -458,6 +462,10 @@ window.TURNIERDATEN = {
     { id: "HD-HF-M1", konkurrenz: "HD", runde: "HF", slot: 1, a: "Sieger HD-09", b: "Sieger HD-10", termin: "2026-09-26T11:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "HD-HF-M2", konkurrenz: "HD", runde: "HF", slot: 2, a: "Sieger HD-11", b: "Sieger HD-12", termin: "2026-09-26T15:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "HD-F-M1", konkurrenz: "HD", runde: "F", slot: 1, a: "Sieger HD-13", b: "Sieger HD-14", termin: "2026-09-26T17:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    /* Herren Doppel B-Runde (Stand 19.09.): Feld noch unvollständig — HD-02 (So.), HD-03 (Mi. 23.09.) und die
+       VF-Verlierer der Freilos-Teams fehlen noch. Hier stehen nur die bereits feststehenden Teams. */
+    { id: "HD-B-R1-M1", konkurrenz: "HD", runde: "B-R1", slot: 1, a: "Wenzel / Engfer", b: "Ludwig / Brink", termin: "2026-09-25T18:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-B-R1-M2", konkurrenz: "HD", runde: "B-R1", slot: 2, a: "Engels / Otte", b: "Verlierer HD-02", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
     { id: "HD-B-F-M1", konkurrenz: "HD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Damen Einzel: Gruppe (6 Spiele, DE-1 … DE-6) ---------- */
