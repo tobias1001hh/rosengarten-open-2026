@@ -317,7 +317,7 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-21T09:35",
+  stand: "2026-09-21T10:30",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
   phase: "turnier",
   news: "Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
@@ -443,10 +443,10 @@ window.TURNIERDATEN = {
        nach HE-12). Offen bis Sonntag: Engels (bei Niederlage in HE-10) und Wenzel (bei Niederlage in HE-11)
        — deren VF-Gegner Engfer bzw. Wehske haben ihre R1 regulär gespielt und qualifizieren sich NICHT. */
     { id: "HE-B-R1-M1", konkurrenz: "HE", runde: "B-R1", slot: 1, a: "Uwe Sackmann", b: "Ben Fiske", termin: "2026-09-20T10:30", platz: 4, status: "fertig", ergebnis: "5:7 5:7", sieger: "b" },
-    { id: "HE-B-R1-M2", konkurrenz: "HE", runde: "B-R1", slot: 2, a: "Paul Müller", b: "Marc-Philipp Kittel", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HE-B-R1-M3", konkurrenz: "HE", runde: "B-R1", slot: 3, a: "Tobias Tiedgen", b: "Helge Wenzel", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-B-R1-M2", konkurrenz: "HE", runde: "B-R1", slot: 2, a: "Paul Müller", b: "Marc-Philipp Kittel", termin: "2026-09-25T17:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-B-R1-M3", konkurrenz: "HE", runde: "B-R1", slot: 3, a: "Tobias Tiedgen", b: "Helge Wenzel", termin: "2026-09-26T11:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
     { id: "HE-B-HF-M1", konkurrenz: "HE", runde: "B-HF", slot: 1, a: "Ben Fiske", b: "Sieger HE-B2", termin: "2026-09-26T11:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HE-B-HF-M2", konkurrenz: "HE", runde: "B-HF", slot: 2, a: "Sieger HE-B3", b: "offen", termin: "2026-09-26T11:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HE-B-HF-M2", konkurrenz: "HE", runde: "B-HF", slot: 2, a: "Sieger HE-B3", b: "offen", termin: "2026-09-26T15:00", platz: 4, status: "geplant", ergebnis: null, sieger: null },
     { id: "HE-B-F-M1", konkurrenz: "HE", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T14:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Herren Doppel: Runde 1 (ausgelost 15.09.) ---------- */
@@ -472,12 +472,13 @@ window.TURNIERDATEN = {
        HD-12 ist entschieden: Sudhoff/Köhler [2] haben gewonnen und bleiben im A-Feld; Kittel/Tiedgen sind als
        Verlierer nicht B-berechtigt (erstes gespieltes Match war HD-07, gewonnen).
        Noch offen: nur Verlierer HD-09 (nur falls Vock/Bohn) → B-HF-Platz "offen". */
-    { id: "HD-B-R1-M1", konkurrenz: "HD", runde: "B-R1", slot: 1, a: "Wenzel / Engfer", b: "Ludwig / Brink", termin: "2026-09-25T18:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HD-B-R1-M2", konkurrenz: "HD", runde: "B-R1", slot: 2, a: "Engels / Otte", b: "Gutsch / Hall", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HD-B-R1-M3", konkurrenz: "HD", runde: "B-R1", slot: 3, a: "Stadach / Brüggestrat [3]", b: "Verlierer HD-03", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HD-B-HF-M1", konkurrenz: "HD", runde: "B-HF", slot: 1, a: "Sieger HD-B1", b: "Sieger HD-B3", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HD-B-HF-M2", konkurrenz: "HD", runde: "B-HF", slot: 2, a: "Sieger HD-B2", b: "offen", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "HD-B-F-M1", konkurrenz: "HD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-B-R1-M1", konkurrenz: "HD", runde: "B-R1", slot: 1, a: "Wenzel / Engfer", b: "Ludwig / Brink", termin: "2026-09-25T17:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-B-R1-M2", konkurrenz: "HD", runde: "B-R1", slot: 2, a: "Engels / Otte", b: "Gutsch / Hall", termin: "2026-09-25T18:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-B-R1-M3", konkurrenz: "HD", runde: "B-R1", slot: 3, a: "Stadach / Brüggestrat [3]", b: "Verlierer HD-03", termin: "2026-09-25T20:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    /* HD-B-Struktur (TL 21.09.): Feld geschlossen (6 Teams). B-HF = Sieger HD-B1 vs Sieger HD-B2;
+       der Sieger von HD-B3 erhält ein Freilos direkt ins B-Finale (Brüggestrat ist Sa. erst ab 15:00 verfügbar). */
+    { id: "HD-B-HF-M1", konkurrenz: "HD", runde: "B-HF", slot: 1, a: "Sieger HD-B1", b: "Sieger HD-B2", termin: "2026-09-26T12:30", platz: 1, status: "geplant", ergebnis: null, sieger: null },
+    { id: "HD-B-F-M1", konkurrenz: "HD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale", b: "Sieger HD-B3 (Freilos)", termin: "2026-09-27T13:00", platz: 2, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Damen Einzel: Gruppe (6 Spiele, DE-1 … DE-6) ---------- */
     { id: "DE-GR-M1", konkurrenz: "DE", runde: "GR", slot: 1, a: "Maxi Jaekel", b: "Jonna Kampe", termin: "2026-09-19T19:00", platz: 3, status: "fertig", ergebnis: "2:6 2:6", sieger: "b" },
@@ -498,8 +499,8 @@ window.TURNIERDATEN = {
     { id: "DD-F-M1", konkurrenz: "DD", runde: "F", slot: 1, a: "Sieger DD-05", b: "Sieger DD-06", termin: "2026-09-26T17:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
     /* Damen Doppel B-Runde (ergänzt 20.09.): Jaekel/Freyer (VF-Verlust 18.09.) und Maschke/Nellis (19.09.) fix;
        Gegnerinnen = Verliererinnen von DD-03 (gespielt 20.09.: Ruiz/Hahn) und von DD-02 (neu Di. 22.09. 16:00). */
-    { id: "DD-B-HF-M1", konkurrenz: "DD", runde: "B-HF", slot: 1, a: "Jaekel / Freyer", b: "Verliererinnen DD-02", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "DD-B-HF-M2", konkurrenz: "DD", runde: "B-HF", slot: 2, a: "Ruiz / Hahn", b: "Maschke / Nellis", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-B-HF-M1", konkurrenz: "DD", runde: "B-HF", slot: 1, a: "Jaekel / Freyer", b: "Verliererinnen DD-02", termin: "2026-09-26T12:30", platz: 2, status: "geplant", ergebnis: null, sieger: null },
+    { id: "DD-B-HF-M2", konkurrenz: "DD", runde: "B-HF", slot: 2, a: "Ruiz / Hahn", b: "Maschke / Nellis", termin: "2026-09-26T11:00", platz: 4, status: "geplant", ergebnis: null, sieger: null },
     { id: "DD-B-F-M1", konkurrenz: "DD", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
 
     /* ---------- Mixed: Runde 1 (ausgelost 15.09., 6 Freilose) ---------- */
@@ -524,7 +525,7 @@ window.TURNIERDATEN = {
        (R1-Verlust 20.09.) fix. Sicher dazu: Verlierer MX-02 (So.) und Verlierer MX-12 (Fr. 25., beide Freilos-Teams).
        Möglich außerdem: Vock/Mecklenburg (falls MX-09 verloren) und Fiske/Ruiz (falls MX-11 verloren) → B-HF "offen". */
     { id: "MX-B-R1-M1", konkurrenz: "MX", runde: "B-R1", slot: 1, a: "Krause / Bohn [3]", b: "Engels / Engels", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
-    { id: "MX-B-R1-M2", konkurrenz: "MX", runde: "B-R1", slot: 2, a: "Kittel / Kittel", b: "Verlierer MX-12", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-B-R1-M2", konkurrenz: "MX", runde: "B-R1", slot: 2, a: "Kittel / Kittel", b: "Verlierer MX-12", termin: "2026-09-26T15:00", platz: 1, status: "geplant", ergebnis: null, sieger: null },
     { id: "MX-B-HF-M1", konkurrenz: "MX", runde: "B-HF", slot: 1, a: "Sieger MX-B1", b: "offen", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
     { id: "MX-B-HF-M2", konkurrenz: "MX", runde: "B-HF", slot: 2, a: "Sieger MX-B2", b: "offen", termin: null, platz: null, status: "geplant", ergebnis: null, sieger: null },
     { id: "MX-B-F-M1", konkurrenz: "MX", runde: "B-F", slot: 1, a: "Sieger B-Halbfinale 1", b: "Sieger B-Halbfinale 2", termin: "2026-09-27T13:00", platz: 4, status: "geplant", ergebnis: null, sieger: null }
