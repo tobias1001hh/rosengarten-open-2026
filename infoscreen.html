@@ -144,10 +144,10 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-23T11:30",
+  stand: "2026-09-23T14:15",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
   phase: "turnier",
-  news: "Krankheitsbedingte Änderungen: HD-03 entfällt — kampflos für Freyer/Kampe (Viertelfinale Fr. 18:00 gegen Michaelis/Michaelis); auch HE-10 und HE-14 entfallen — Jonathan Engels steht im Halbfinale (Sa. 15:00), Kilian Wehske im Finale (So. 13:00); Stadach/Brüggestrat kampflos im Doppel-B-Finale (So. 13:00), das Spiel Fr. 20:00 entfällt. Das heutige HD-14 um 20:00 findet statt. — Terminänderung: DD-05 (Damen-Doppel-Halbfinale) am Sa. 26.09. neu um 12:30 auf Platz 3 (statt 09:30). — Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
+  news: "Krankheitsbedingte Änderungen: HD-03 entfällt — kampflos für Freyer/Kampe (Viertelfinale Fr. 18:00 gegen Michaelis/Michaelis); auch HE-10 und HE-14 entfallen — Jonathan Engels steht im Halbfinale (Sa. 15:00), Kilian Wehske im Finale (So. 13:00); Stadach/Brüggestrat kampflos im Doppel-B-Finale (So. 13:00), das Spiel Fr. 20:00 entfällt. Das heutige HD-14 um 20:00 findet statt. Auch das Mixed-Halbfinale MX-14 entfällt (Fiske/Ruiz treten nicht an) — der Sieger von MX-12 steht damit direkt im Mixed-Finale. — Terminänderung: DD-05 (Damen-Doppel-Halbfinale) am Sa. 26.09. neu um 12:30 auf Platz 3 (statt 09:30). — Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
 
   konkurrenzen: [
     {
@@ -346,8 +346,8 @@ window.TURNIERDATEN = {
     { id: "MX-VF-M4", konkurrenz: "MX", runde: "VF", slot: 4, a: "Müller-Hey / Müller-Hey", b: "Brüggestrat / Krones-Nendza [2]", termin: "2026-09-25T18:15", platz: 4, status: "geplant", ergebnis: null, sieger: null },
     /* Mixed: Halbfinale (MX-13, MX-14) + Finale (MX-15) + B-Finale */
     { id: "MX-HF-M1", konkurrenz: "MX", runde: "HF", slot: 1, a: "Sieger MX-09", b: "Gerhus-Eddelbüttel / Eddelbüttel", termin: "2026-09-26T09:30", platz: 4, status: "geplant", ergebnis: null, sieger: null },
-    { id: "MX-HF-M2", konkurrenz: "MX", runde: "HF", slot: 2, a: "Fiske / Ruiz [4]", b: "Sieger MX-12", termin: "2026-09-26T15:00", platz: 3, status: "geplant", ergebnis: null, sieger: null },
-    { id: "MX-F-M1", konkurrenz: "MX", runde: "F", slot: 1, a: "Sieger MX-13", b: "Sieger MX-14", termin: "2026-09-27T15:15", platz: 3, status: "geplant", ergebnis: null, sieger: null },
+    { id: "MX-HF-M2", konkurrenz: "MX", runde: "HF", slot: 2, a: "Fiske / Ruiz [4]", b: "Sieger MX-12", termin: null, platz: null, status: "wo", ergebnis: "w.o.", sieger: "b" },
+    { id: "MX-F-M1", konkurrenz: "MX", runde: "F", slot: 1, a: "Sieger MX-13", b: "Sieger MX-12", termin: "2026-09-27T15:15", platz: 3, status: "geplant", ergebnis: null, sieger: null },
     /* Mixed B-Runde (ergänzt 20.09.): Krause/Bohn [3] (VF-Verlust 19.09., Freilos-Team) und Engels/Engels
        (R1-Verlust 20.09.) fix. Sicher dazu: Verlierer MX-02 (So.) und Verlierer MX-12 (Fr. 25., beide Freilos-Teams).
        Möglich außerdem: Vock/Mecklenburg (falls MX-09 verloren) und Fiske/Ruiz (falls MX-11 verloren) → B-HF "offen". */
