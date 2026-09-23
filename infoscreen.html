@@ -72,6 +72,12 @@
   .badge.wo, .badge.verschoben { border: 1px solid var(--red); color: var(--red); }
   @keyframes pulse { 50% { opacity: 0.5; } }
   @media (prefers-reduced-motion: reduce) { .badge.laeuft { animation: none; } }
+  tr.trenner td {
+    border-bottom: none; padding: 2.2vh 1.2vw 0.4vh; color: var(--muted);
+    font-family: "Montserrat", sans-serif; font-weight: 500; font-size: 1.5vw;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  tr.trenner:first-child td { padding-top: 0; }
 
   .sieger-liste { display: grid; gap: 2vh; }
   .sieger-liste .zeile { display: flex; align-items: baseline; gap: 2vw; }
@@ -138,7 +144,7 @@
 // Nie: Kontaktdaten, LK-Werte, interne Vermerke, Zeitwünsche.
 // ============================================================
 window.TURNIERDATEN = {
-  stand: "2026-09-23T09:08",
+  stand: "2026-09-23T11:30",
   // Phasen: "vor-auslosung" | "ausgelost" | "turnier" | "beendet"
   phase: "turnier",
   news: "Krankheitsbedingte Änderungen: HD-03 entfällt — kampflos für Freyer/Kampe (Viertelfinale Fr. 18:00 gegen Michaelis/Michaelis); auch HE-10 und HE-14 entfallen — Jonathan Engels steht im Halbfinale (Sa. 15:00), Kilian Wehske im Finale (So. 13:00); Stadach/Brüggestrat kampflos im Doppel-B-Finale (So. 13:00), das Spiel Fr. 20:00 entfällt. Das heutige HD-14 um 20:00 findet statt. — Terminänderung: DD-05 (Damen-Doppel-Halbfinale) am Sa. 26.09. neu um 12:30 auf Platz 3 (statt 09:30). — Neues Finalprogramm: Sa. 26.09. 17:00 Finals Herren- + Damen-Doppel (danach Doppel-Siegerehrung bei der Jubiläumsparty!) — So. 27.09.: 13:00 Finale Herren Einzel, 15:15 Finale Mixed, ca. 16:45 große Siegerehrung. Bitte 15 Minuten vor Spielbeginn auf der Anlage sein.",
@@ -481,6 +487,30 @@ window.TURNIERDATEN = {
     if (tag === lokalDatum(morgen)) return "Morgen";
     return fmtTagKurz(tag + "T12:00");
   }
+  /* Kernseite: beantwortet die zwei Fragen, die im Clubhaus am haeufigsten kommen —
+     "wie ist es ausgegangen?" und "wann bin ich dran?". Laeuft in der Rotation jede
+     zweite Seite, damit niemand dafuer einen ganzen Zyklus abwarten muss. */
+  function jetztSlide() {
+    var jetzt = new Date();
+    var laufend = D.matches.filter(function (m) { return m.status === "laeuft"; })
+      .sort(function (a, b) { return String(a.termin || "").localeCompare(String(b.termin || "")); });
+    /* Nur wirklich schon gespielte Matches: vorab gewertete w.o. mit Termin in der Zukunft
+       stehen sonst faelschlich unter "Zuletzt gespielt". */
+    var fertig = D.matches.filter(function (m) {
+      return (m.status === "fertig" || m.status === "wo") && (!m.termin || new Date(m.termin) <= jetzt);
+    }).sort(function (a, b) { return String(b.termin || "").localeCompare(String(a.termin || "")); }).slice(0, 3);
+    var kommend = D.matches.filter(function (m) { return m.termin && new Date(m.termin) > jetzt && m.status === "geplant"; })
+      .sort(function (a, b) { return a.termin.localeCompare(b.termin); }).slice(0, 3);
+    if (!fertig.length && !kommend.length && !laufend.length) return null;
+
+    function trenner(text) { return "<tr class='trenner'><td colspan='4'>" + esc(text) + "</td></tr>"; }
+    var zeilen = [];
+    if (laufend.length) zeilen = zeilen.concat(trenner("Läuft gerade"), laufend.map(function (m) { return matchZeile(m, false); }));
+    if (fertig.length) zeilen = zeilen.concat(trenner("Zuletzt gespielt"), fertig.map(function (m) { return matchZeile(m, true); }));
+    if (kommend.length) zeilen = zeilen.concat(trenner("Als Nächstes"), kommend.map(function (m) { return matchZeile(m, true); }));
+    return tabellenSlide("Rosengarten Open 2026", "Gerade & gleich", zeilen);
+  }
+
   function wetterSlide(heuteStr) {
     if (!wetter || !wetter.daily) return null;
     var d = wetter.daily;
@@ -518,8 +548,10 @@ window.TURNIERDATEN = {
   }
 
   /* ---------- Slides bauen (bei jedem Zyklus neu → Tageswechsel klappt) ---------- */
+  /* Drei Listen statt einer: "kern" laeuft jede zweite Seite, "pool" rotiert dazwischen,
+     "selten" (Programm, Clubiläum) kommt nur jeden dritten Zyklus mit je einem Eintrag. */
   function buildSlides() {
-    var slides = [];
+    var kern = [], pool = [], selten = [];
     var jetzt = new Date();
     var heute = lokalDatum(jetzt);
     var vorTurnier = D.phase === "vor-auslosung" || D.phase === "ausgelost";
@@ -533,48 +565,46 @@ window.TURNIERDATEN = {
     if (vorTurnier && jetzt < TURNIERSTART) w += "<div class='countdown' id='countdown'></div>";
     if (D.news) w += "<div class='news'>" + esc(D.news) + "</div>";
     w += "</div></div>";
-    slides.push({ html: w });
+    pool.push({ html: w });
+
+    var jz = jetztSlide();
+    if (jz) kern.push(jz);
 
     if (D.phase === "beendet") {
       var sz = D.konkurrenzen.filter(function (k) { return k.sieger && k.sieger.A; }).map(function (k) {
         return "<div class='zeile'><span class='k'>" + esc(k.name) + "</span><span class='n'>&#9733; " + esc(k.sieger.A) + "</span></div>" +
           (k.sieger.B ? "<div class='zeile'><span class='k'></span><span class='n' style='color:var(--muted)'>B-Runde: " + esc(k.sieger.B) + "</span></div>" : "");
       });
-      if (sz.length) slides.push({ html: kopf("Rosengarten Open 2026", "Die Sieger") + "<div class='inhalt'><div class='sieger-liste'>" + sz.join("") + "</div></div>" });
+      if (sz.length) kern.push({ html: kopf("Rosengarten Open 2026", "Die Sieger") + "<div class='inhalt'><div class='sieger-liste'>" + sz.join("") + "</div></div>" });
     }
 
     if (D.phase === "turnier" || D.phase === "beendet") {
       var heutige = D.matches.filter(function (m) { return m.termin && m.termin.slice(0, 10) === heute; })
         .sort(function (a, b) { return a.termin.localeCompare(b.termin); });
       seiten(heutige, MAX_ZEILEN).forEach(function (seite, i, alle) {
-        slides.push(tabellenSlide("Heute auf der Anlage", alle.length > 1 ? "Spielplan " + (i + 1) + "/" + alle.length : "Spielplan heute",
+        pool.push(tabellenSlide("Heute auf der Anlage", alle.length > 1 ? "Spielplan " + (i + 1) + "/" + alle.length : "Spielplan heute",
           seite.map(function (m) { return matchZeile(m, false); })));
       });
 
-      var fertig = D.matches.filter(function (m) { return m.status === "fertig" || m.status === "wo"; })
-        .sort(function (a, b) { return String(b.termin || "").localeCompare(String(a.termin || "")); }).slice(0, MAX_ZEILEN);
-      if (fertig.length) slides.push(tabellenSlide("Zwischenstand", "Aktuelle Ergebnisse", fertig.map(function (m) { return matchZeile(m, true); })));
-
-      var kommend = D.matches.filter(function (m) { return m.termin && new Date(m.termin) > jetzt && (m.status === "geplant" || m.status === "laeuft"); })
-        .sort(function (a, b) { return a.termin.localeCompare(b.termin); }).slice(0, MAX_ZEILEN);
-      if (kommend.length) slides.push(tabellenSlide("Gleich & demnächst", "Nächste Matches", kommend.map(function (m) { return matchZeile(m, true); })));
+      /* Eigene Seiten "Aktuelle Ergebnisse" und "Nächste Matches" entfallen hier:
+         beides steht auf der Kernseite "Gerade & gleich", die jede zweite Seite laeuft. */
 
       var endrunde = D.matches.filter(function (m) { return m.runde === "HF" || m.runde === "F" || m.runde === "B-F"; })
         .sort(function (a, b) { return (a.konkurrenz + a.runde).localeCompare(b.konkurrenz + b.runde); }).slice(0, MAX_ZEILEN);
-      if (endrunde.length) slides.push(tabellenSlide("Der Weg zum Titel", "Endrunde", endrunde.map(function (m) { return matchZeile(m, true); })));
+      if (endrunde.length) pool.push(tabellenSlide("Der Weg zum Titel", "Endrunde", endrunde.map(function (m) { return matchZeile(m, true); })));
     }
 
     if (D.phase === "ausgelost") {
       var erste = D.matches.filter(function (m) { return m.termin; })
         .sort(function (a, b) { return a.termin.localeCompare(b.termin); }).slice(0, MAX_ZEILEN);
-      if (erste.length) slides.push(tabellenSlide("Die Auslosung ist erfolgt", "Erste Ansetzungen", erste.map(function (m) { return matchZeile(m, true); })));
-      else slides.push({ html: kopf("15. September 2026", "Die Auslosung ist erfolgt") + "<div class='inhalt welcome'><div class='datum'>Tableaus und Spielplan: auf der Turnierseite und am Aushang.</div></div>" });
+      if (erste.length) pool.push(tabellenSlide("Die Auslosung ist erfolgt", "Erste Ansetzungen", erste.map(function (m) { return matchZeile(m, true); })));
+      else pool.push({ html: kopf("15. September 2026", "Die Auslosung ist erfolgt") + "<div class='inhalt welcome'><div class='datum'>Tableaus und Spielplan: auf der Turnierseite und am Aushang.</div></div>" });
     }
 
     /* Programm — auch waehrend der Turnierwoche zeigen: das Finalwochenende mit
        der geteilten Siegerehrung ist genau die Info, nach der gefragt wird. */
     if (D.phase !== "beendet") {
-      slides.push(tabellenSlide("Turnierwoche", "Programm", [
+      selten.push(tabellenSlide("Turnierwoche", "Programm", [
         "<tr><td class='zeit'>Fr. 18.09.</td><td>ab 18:00</td><td class='paarung'>Vorrunden</td><td></td></tr>",
         "<tr><td class='zeit'>Sa./So. 19./20.09.</td><td>ab 09:00</td><td class='paarung'>Vorrunden</td><td></td></tr>",
         "<tr><td class='zeit'>Fr. 25.09.</td><td>ab 18:00</td><td class='paarung'>Vorrunden / Halbfinals</td><td></td></tr>",
@@ -588,14 +618,14 @@ window.TURNIERDATEN = {
         return "<tr><td class='paarung'>" + esc(k.name) + "</td><td>" + esc(k.meldungen) +
           (String(k.meldungen).indexOf("Team") < 0 ? " Meldungen" : "") + "</td></tr>";
       });
-      if (kz.length) slides.push(tabellenSlide("Es wird gespielt", "Konkurrenzen", kz));
+      if (kz.length) pool.push(tabellenSlide("Es wird gespielt", "Konkurrenzen", kz));
     }
 
     var ws = wetterSlide(heute);
-    if (ws) slides.push(ws);
+    if (ws) pool.push(ws);
 
     if (jetzt < new Date("2026-09-27T00:00:00")) {
-      slides.push(tabellenSlide("Wir laden alle ein — Samstag, 26.09.2026", "Clubiläum", [
+      selten.push(tabellenSlide("Wir laden alle ein — Samstag, 26.09.2026", "Clubiläum", [
         "<tr><td class='zeit'>15:00</td><td class='paarung'>Start des Jubiläumsfests mit offizieller Eröffnung, Spiel- &amp; Mitmach-Stationen, Ausstellung der Vereinschronik</td></tr>",
         "<tr><td class='zeit'>17:00</td><td class='paarung'><b>Finals Herren- &amp; Damen-Doppel</b> (parallel auf Platz 1 und 3)</td></tr>",
         "<tr><td class='zeit'>17:30</td><td class='paarung'>Ehrungen der Jubilarinnen und Jubilare, gemeinsames Jubiläumsfoto</td></tr>",
@@ -604,11 +634,25 @@ window.TURNIERDATEN = {
         "<tr><td class='zeit'>21:00</td><td class='paarung'>Party im Clubhaus — open end!</td></tr>"
       ]));
     }
-    return slides;
+    /* Ohne Kernseite (z.B. lange vor dem Turnier) bleibt es beim einfachen Durchlauf. */
+    if (!kern.length) return pool.concat(selten);
+
+    var lauf = pool.slice();
+    if (selten.length && zyklus % 3 === 0) lauf.push(selten[seltenZeiger++ % selten.length]);
+
+    var out = [];
+    for (var n = 0; n < lauf.length; n++) {
+      out.push(kern[n % kern.length]);
+      out.push(lauf[n]);
+    }
+    zyklus++;
+    return out;
   }
 
   /* ---------- Rotation über zwei Layer ---------- */
   var layers = [document.getElementById("layerA"), document.getElementById("layerB")];
+  /* Ausserhalb von buildSlides(), damit die seltene Gruppe ueber Zyklen hinweg weiterwandert. */
+  var zyklus = 0, seltenZeiger = 0;
   var aktivLayer = 0, slideNr = -1, slides = buildSlides();
   var punkte = document.getElementById("punkte");
 
