@@ -399,6 +399,21 @@ window.TURNIERDATEN = {
     if (b) name = r === "R1" ? "B-Runde 1" : "B-" + name;
     return name;
   }
+  /* Spielnummer wie auf Aushang/Laufzettel (siehe homepage.html) */
+  function spielNr(m) {
+    if (m.nr) return m.nr;
+    var k = m.konkurrenz, r = m.runde, s = m.slot || 0, dd = k === "DD";
+    function p2(n) { return (n < 10 ? "0" : "") + n; }
+    if (r === "GR")   return k + "-" + s;
+    if (r === "R1")   return k + "-" + p2(s);
+    if (r === "VF")   return k + "-" + p2(s + 8);
+    if (r === "HF")   return k + "-" + p2(dd ? s + 4 : s + 12);
+    if (r === "F")    return k + "-" + (dd ? "07" : "15");
+    if (r === "B-R1") return k + "-B" + s;
+    if (r === "B-HF") return k + "-B" + (dd ? s : s + 4);
+    if (r === "B-F")  return k + "-B" + (dd ? 3 : 7);
+    return m.id;
+  }
   function fmtUhr(iso) { return iso ? iso.slice(11, 16) : ""; }
   function fmtTagKurz(iso) {
     var d = new Date(iso);
@@ -421,7 +436,7 @@ window.TURNIERDATEN = {
     return "<tr><td class='zeit'>" + (m.termin ? tag + fmtUhr(m.termin) : "–") +
       "</td><td class='platz'>" + (m.platz ? "Platz " + esc(m.platz) : "") +
       "</td><td><span class='paarung'>" + esc(m.a) + " – " + esc(m.b) + "</span><br><span class='konkR'>" +
-      esc(k.name || m.konkurrenz) + " · " + esc(rundenLabel(m.runde, m.konkurrenz)) + "</span></td><td>" + rechts + "</td></tr>";
+      esc(spielNr(m)) + " · " + esc(k.name || m.konkurrenz) + " · " + esc(rundenLabel(m.runde, m.konkurrenz)) + "</span></td><td>" + rechts + "</td></tr>";
   }
   function tabellenSlide(eyebrow, titel, zeilen, klasse) {
     return { html: kopf(eyebrow, titel) + "<div class='inhalt tab" + (klasse ? " " + klasse : "") + "'><table><tbody>" + zeilen.join("") + "</tbody></table></div>" };
