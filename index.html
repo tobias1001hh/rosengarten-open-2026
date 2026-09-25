@@ -163,6 +163,8 @@
   .match .name.freilos, .match .name.offen { color: var(--muted); font-style: italic; }
   .match .satz { white-space: nowrap; color: var(--heading); font-weight: 700; }
   .match .meta { padding: 4px 9px 6px; font-size: 0.76rem; color: var(--muted); border-top: 1px solid var(--line); display: flex; gap: 10px; flex-wrap: wrap; }
+  .match .nr { padding: 4px 9px 0; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; color: var(--red); }
+  td.nr { font-weight: 700; white-space: nowrap; color: var(--heading); }
 
   .gr-tab td.platz { font-weight: 700; color: var(--heading); }
   tr.spitze td { background: var(--yellow-soft) !important; }
@@ -565,6 +567,22 @@ window.TURNIERDATEN = {
   }
   function rundenFolge(groesse) { return groesse === 8 ? ["R1", "HF", "F"] : ["R1", "VF", "HF", "F"]; }
   function matchesVon(kid) { return D.matches.filter(function (m) { return m.konkurrenz === kid; }); }
+  /* Spielnummer wie auf Aushang/Laufzettel: R1 = 01–08, VF = 09–12, HF = 13/14, Finale = 15
+     (Damen Doppel 8er: 01–04, 05/06, 07); B-Runde: B1–B3, B-HF = B5/B6, B-Finale = B7 (DD: B1/B2, B3); DE-1…DE-6 */
+  function spielNr(m) {
+    if (m.nr) return m.nr;
+    var k = m.konkurrenz, r = m.runde, s = m.slot || 0, dd = k === "DD";
+    function p2(n) { return (n < 10 ? "0" : "") + n; }
+    if (r === "GR")   return k + "-" + s;
+    if (r === "R1")   return k + "-" + p2(s);
+    if (r === "VF")   return k + "-" + p2(s + 8);
+    if (r === "HF")   return k + "-" + p2(dd ? s + 4 : s + 12);
+    if (r === "F")    return k + "-" + (dd ? "07" : "15");
+    if (r === "B-R1") return k + "-B" + s;
+    if (r === "B-HF") return k + "-B" + (dd ? s : s + 4);
+    if (r === "B-F")  return k + "-B" + (dd ? 3 : 7);
+    return m.id;
+  }
   function fmtZeit(iso) {
     if (!iso) return "";
     var d = new Date(iso);
@@ -682,6 +700,7 @@ window.TURNIERDATEN = {
         (istSieger && m.ergebnis ? '<span class="satz">' + esc(m.ergebnis) + "</span>" : "") + "</div>";
     }
     var html = '<div class="match">' +
+      '<div class="nr">' + esc(spielNr(m)) + "</div>" +
       zeile(m.a, m.sieger === "a") +
       zeile(m.b, m.sieger === "b");
     if (mitMeta && (m.termin || m.platz || m.status === "laeuft")) {
@@ -761,13 +780,13 @@ window.TURNIERDATEN = {
       var d = new Date(tag + "T12:00");
       var rows = proTag[tag].map(function (m) {
         var k = kName[m.konkurrenz] || {};
-        return "<tr><td>" + m.termin.slice(11, 16) + "</td><td>" + (m.platz ? "Platz " + esc(m.platz) : "–") + "</td><td>" +
+        return "<tr><td>" + m.termin.slice(11, 16) + "</td><td>" + (m.platz ? "Platz " + esc(m.platz) : "–") + '</td><td class="nr">' + esc(spielNr(m)) + "</td><td>" +
           esc(k.name || m.konkurrenz) + " · " + esc(rundenLabel(m.runde, k.tableauGroesse)) + "</td><td>" +
           esc(m.a) + " – " + esc(m.b) + "</td><td>" +
           (m.status === "fertig" || m.status === "wo" ? '<span class="satz">' + esc(m.ergebnis || "") + "</span>" : statusBadge(m)) + "</td></tr>";
       }).join("");
       return '<div class="tag"><h3>' + d.toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "2-digit" }) +
-        '</h3><div class="tabelle-scroll"><table><thead><tr><th>Zeit</th><th>Platz</th><th>Konkurrenz</th><th>Begegnung</th><th>Stand</th></tr></thead><tbody>' +
+        '</h3><div class="tabelle-scroll"><table><thead><tr><th>Zeit</th><th>Platz</th><th>Nr.</th><th>Konkurrenz</th><th>Begegnung</th><th>Stand</th></tr></thead><tbody>' +
         rows + "</tbody></table></div></div>";
     }).join("");
   }
