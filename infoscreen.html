@@ -26,7 +26,7 @@
   .layer {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
-    padding: 4vh 5vw 9vh;
+    padding: 4vh 5vw 10vh;
     opacity: 0;
     transition: opacity 0.8s ease;
   }
@@ -51,14 +51,18 @@
   /* Willkommen-Slide */
   .welcome { text-align: center; }
   .welcome .lockup { display: inline-block; background: #fff; border-radius: 1vw; padding: 2vh 2.2vw; }
-  .welcome .lockup img { width: 30vw; display: block; }
+  .welcome .lockup img { width: 24vw; display: block; }
   .welcome h1 { margin: 3.5vh 0 0; font-family: "Montserrat", sans-serif; font-weight: 800; text-transform: uppercase; font-size: 5.6vw; line-height: 1.05; color: #fff; }
   .welcome .jub { margin-top: 1.6vh; text-transform: uppercase; letter-spacing: 0.12em; font-size: 2vw; color: var(--gold); font-weight: 700; }
   .welcome .datum { margin-top: 2vh; font-size: 2.4vw; color: var(--ink); }
   .welcome .countdown { margin-top: 3vh; font-family: "Montserrat", sans-serif; font-size: 3.2vw; color: var(--ball); font-variant-numeric: tabular-nums; }
   .welcome .news { margin-top: 3vh; font-size: 2vw; color: var(--muted); }
   .welcome .eyebrow { margin-top: 4vh; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; font-size: 1.7vw; color: var(--red); }
-  .welcome .news.gross { margin: 1.5vh auto 0; max-width: 78vw; font-size: 2.9vw; line-height: 1.35; color: #fff; font-weight: 600; }
+  .welcome .news.gross {
+    margin: 1.5vh auto 0; max-width: 78vw; font-size: 2.9vw; line-height: 1.35; color: #fff; font-weight: 600;
+    /* Hoechstens 5 Zeilen — laengere Meldungen werden mit "…" gekappt statt in die Fusszeile zu laufen. */
+    display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+  }
 
   /* Tabellen-Slides */
   table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
@@ -404,12 +408,17 @@ window.TURNIERDATEN = {
     var map = { laeuft: "LIVE", geplant: "geplant", wo: "w.o.", verschoben: "verschoben" };
     return '<span class="badge ' + esc(m.status) + '">' + esc(map[m.status] || m.status) + "</span>";
   }
+  /* mitTag: false = nur Uhrzeit · true = "Fr., 25.09. 17:00" · "kurz" = "Fr. 17:00"
+     (schmale Zeit-Spalte, damit die Paarung auf 16:9 seltener umbricht). */
   function matchZeile(m, mitTag) {
     var k = kIndex[m.konkurrenz] || {};
     var rechts = (m.status === "fertig" || m.status === "wo")
       ? '<span class="erg">' + esc(m.ergebnis || "w.o.") + "</span>"
       : statusBadge(m);
-    return "<tr><td class='zeit'>" + (m.termin ? (mitTag ? fmtTagKurz(m.termin) + " " : "") + fmtUhr(m.termin) : "–") +
+    var tag = !m.termin ? "" :
+      mitTag === "kurz" ? new Date(m.termin).toLocaleDateString("de-DE", { weekday: "short" }) + " " :
+      mitTag ? fmtTagKurz(m.termin) + " " : "";
+    return "<tr><td class='zeit'>" + (m.termin ? tag + fmtUhr(m.termin) : "–") +
       "</td><td class='platz'>" + (m.platz ? "Platz " + esc(m.platz) : "") +
       "</td><td><span class='paarung'>" + esc(m.a) + " – " + esc(m.b) + "</span><br><span class='konkR'>" +
       esc(k.name || m.konkurrenz) + " · " + esc(rundenLabel(m.runde, m.konkurrenz)) + "</span></td><td>" + rechts + "</td></tr>";
@@ -517,8 +526,8 @@ window.TURNIERDATEN = {
     function trenner(text) { return "<tr class='trenner'><td colspan='4'>" + esc(text) + "</td></tr>"; }
     var zeilen = [];
     if (laufend.length) zeilen = zeilen.concat(trenner("Läuft gerade"), laufend.map(function (m) { return matchZeile(m, false); }));
-    if (fertig.length) zeilen = zeilen.concat(trenner("Zuletzt gespielt"), fertig.map(function (m) { return matchZeile(m, true); }));
-    if (kommend.length) zeilen = zeilen.concat(trenner("Als Nächstes"), kommend.map(function (m) { return matchZeile(m, true); }));
+    if (fertig.length) zeilen = zeilen.concat(trenner("Zuletzt gespielt"), fertig.map(function (m) { return matchZeile(m, "kurz"); }));
+    if (kommend.length) zeilen = zeilen.concat(trenner("Als Nächstes"), kommend.map(function (m) { return matchZeile(m, "kurz"); }));
     return tabellenSlide("Rosengarten Open 2026", "Gerade & gleich", zeilen, "kompakt");
   }
 
@@ -675,6 +684,19 @@ window.TURNIERDATEN = {
   var aktivLayer = 0, slideNr = -1, slides = buildSlides();
   var punkte = document.getElementById("punkte");
 
+  /* Tabellen an die Bildschirmhoehe anpassen: Doppelnamen brechen auf 16:9 oft um, dann
+     passen 6 Zeilen nicht mehr. Lieber die letzten Zeilen weglassen als sie anzuschneiden
+     oder ueber die Fusszeile zu zeichnen. Eine Trennzeile ohne Inhalt darunter faellt mit. */
+  function passeTabelleEin(layer) {
+    var inh = layer.querySelector(".inhalt.tab");
+    var tb = inh && inh.querySelector("tbody");
+    if (!tb) return;
+    var guard = 0;
+    while (inh.scrollHeight > inh.clientHeight + 1 && tb.rows.length > 1 && guard++ < 30) tb.deleteRow(tb.rows.length - 1);
+    var letzte = tb.rows[tb.rows.length - 1];
+    if (letzte && letzte.classList.contains("trenner")) tb.deleteRow(tb.rows.length - 1);
+  }
+
   function zeigeNaechste() {
     slideNr++;
     if (slideNr >= slides.length) { slides = buildSlides(); slideNr = 0; }
@@ -682,6 +704,7 @@ window.TURNIERDATEN = {
     aktivLayer = 1 - aktivLayer;
     var neu = layers[aktivLayer];
     neu.innerHTML = slides[slideNr].html;
+    passeTabelleEin(neu);
     neu.classList.add("sichtbar");
     alt.classList.remove("sichtbar");
     punkte.innerHTML = slides.map(function (_, i) { return "<i" + (i === slideNr ? " class='aktiv'" : "") + "></i>"; }).join("");
